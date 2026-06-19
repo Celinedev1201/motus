@@ -1,0 +1,15 @@
+<?php
+
+return "
+CREATE TABLE IF NOT EXISTS scores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    word_id INT NOT NULL,
+    attempts INT NOT NULL,
+    won TINYINT(1) DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (word_id) REFERENCES words(id) ON DELETE CASCADE
+);
+";

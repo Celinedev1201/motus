@@ -1,0 +1,11 @@
+<?php
+
+return "
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pseudo VARCHAR(50) NOT NULL,
+    email VARCHAR(180) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+";
