@@ -18,11 +18,21 @@ Flight::route('GET /', function () {
 });
 
 Flight::route('GET /login', function () {
+    if (isset($_SESSION['user_id'])) {
+        Flight::redirect('/game');
+        return;
+    }
+
     $page = 'login';
     require_once __DIR__ . '/../views/main.php';
 });
 
 Flight::route('GET /register', function () {
+    if (isset($_SESSION['user_id'])) {
+        Flight::redirect('/game');
+        return;
+    }
+
     $page = 'register';
     require_once __DIR__ . '/../views/main.php';
 });
