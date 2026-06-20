@@ -18,6 +18,11 @@ if (guessForm) {
 
     const data = await response.json();
 
+    if (!data.success) {
+      alert(data.message);
+      return;
+    }
+
     document.getElementById("guess-message").textContent = data.message;
 
     if (data.isWin) {
@@ -28,7 +33,6 @@ if (guessForm) {
 
     if (data.isLose) {
       alert("Perdu ! Le mot était : " + data.secretWord);
-
       window.location.reload();
       return;
     }

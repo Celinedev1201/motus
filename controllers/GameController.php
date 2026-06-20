@@ -34,6 +34,7 @@ class GameController
             $_SESSION['attempts'] = 0;
             $_SESSION['guesses'] = [];
             $_SESSION['results'] = [];
+            $_SESSION['game_over'] = false;
         }
 
         $page = 'game';
@@ -48,6 +49,7 @@ class GameController
         unset($_SESSION['attempts']);
         unset($_SESSION['guesses']);
         unset($_SESSION['results']);
+        unset($_SESSION['game_over']);
 
         $difficulty = $_GET['difficulty'] ?? 'facile';
 
@@ -68,6 +70,32 @@ class GameController
             return;
         }
 
+        if (!isset($_SESSION['word'])) {
+            Flight::json([
+                'success' => false,
+                'message' => 'Aucune partie en cours.'
+            ]);
+            return;
+        }
+
+        if (!empty($_SESSION['game_over'])) {
+            Flight::json([
+                'success' => false,
+                'message' => 'La partie est terminée. Lancez une nouvelle partie.'
+            ]);
+            return;
+        }
+
+        if (($_SESSION['attempts'] ?? 0) >= 6) {
+            $_SESSION['game_over'] = true;
+
+            Flight::json([
+                'success' => false,
+                'message' => 'La partie est terminée.'
+            ]);
+            return;
+        }
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         $guess = strtoupper(trim($data['guess'] ?? ''));
@@ -76,6 +104,14 @@ class GameController
             Flight::json([
                 'success' => false,
                 'message' => 'Veuillez entrer un mot.'
+            ]);
+            return;
+        }
+
+        if (strlen($guess) !== strlen($_SESSION['word'])) {
+            Flight::json([
+                'success' => false,
+                'message' => 'Le mot doit contenir ' . strlen($_SESSION['word']) . ' lettres.'
             ]);
             return;
         }
@@ -91,16 +127,21 @@ class GameController
         $_SESSION['results'][] = $comparison;
         $_SESSION['attempts']++;
 
+        $isLose = $_SESSION['attempts'] >= 6 && !$isWin;
+
+        if ($isWin || $isLose) {
+            $_SESSION['game_over'] = true;
+        }
+
         Flight::json([
             'success' => true,
             'message' => 'Mot ajouté.',
             'guesses' => $_SESSION['guesses'],
             'results' => $_SESSION['results'],
-                'attempts' => $_SESSION['attempts'],
-                'isWin' => $isWin,
-                'isLose' => $_SESSION['attempts'] >= 6 && !$isWin,
-                'secretWord' => $_SESSION['word']
-
+            'attempts' => $_SESSION['attempts'],
+            'isWin' => $isWin,
+            'isLose' => $isLose,
+            'secretWord' => $_SESSION['word']
         ]);
     }
 
@@ -109,17 +150,11 @@ class GameController
         $result = [];
 
         for ($i = 0; $i < strlen($secret); $i++) {
-
             if (($guess[$i] ?? '') === $secret[$i]) {
-
                 $result[] = 'correct';
-
             } elseif (str_contains($secret, $guess[$i] ?? '')) {
-
                 $result[] = 'present';
-
             } else {
-
                 $result[] = 'wrong';
             }
         }

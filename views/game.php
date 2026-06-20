@@ -101,7 +101,7 @@
                 type="text"
                 name="guess"
                 placeholder="Votre mot"
-                maxlength="10"
+                maxlength="<?= strlen($_SESSION['word']) ?>"
                 required
             >
 
