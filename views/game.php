@@ -68,7 +68,7 @@
         </ul>
 
         <a
-            href="/game?difficulty=<?= $_SESSION['difficulty'] ?? 'facile' ?>"
+            href="/new-game?difficulty=<?= $_SESSION['difficulty'] ?? 'facile' ?>"
             class="btn btn-red"
         >
             Nouvelle partie
