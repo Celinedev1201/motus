@@ -374,3 +374,167 @@ body {
 .btn-outline:hover {
   background: rgba(66, 104, 200, 0.2);
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0 35px;
+  }
+
+  .navbar nav {
+    gap: 22px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 60px 50px;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 90px;
+  }
+
+  .game-page {
+    flex-direction: column;
+    gap: 40px;
+    padding: 50px 30px;
+  }
+
+  .game-panel,
+  .game-container {
+    width: 100%;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .page {
+    min-height: calc(100vh - 20px);
+    border-radius: 14px;
+  }
+
+  .navbar {
+    height: auto;
+    padding: 24px 20px;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .logo {
+    font-size: 36px;
+  }
+
+  .navbar nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 22px;
+  }
+
+  .navbar nav a {
+    font-size: 15px;
+  }
+
+  .hero {
+    padding: 45px 22px;
+    gap: 35px;
+  }
+
+  .hero-content h1 {
+    font-size: 64px;
+  }
+
+  .hero-content h2 {
+    font-size: 24px;
+  }
+
+  .hero-content p {
+    font-size: 18px;
+  }
+
+  .auth-container {
+    padding: 45px 16px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+  }
+
+  .game-page {
+    padding: 35px 16px;
+  }
+
+  .game-panel {
+    padding: 24px;
+  }
+
+  .game-panel h1 {
+    font-size: 32px;
+  }
+
+  .game-container {
+    max-width: 100%;
+  }
+
+  .motus-grid {
+    gap: 8px;
+  }
+
+  .motus-row {
+    gap: 8px;
+  }
+
+  .motus-cell {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+
+  .guess-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .guess-form input,
+  .guess-form .btn-primary {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-content h1 {
+    font-size: 50px;
+  }
+
+  .motus-cell {
+    width: 46px;
+    height: 46px;
+    font-size: 23px;
+  }
+
+  .motus-row {
+    gap: 6px;
+  }
+
+  .motus-grid {
+    gap: 6px;
+  }
+
+  .game-header h2 {
+    font-size: 24px;
+  }
+
+  .game-panel h1 {
+    font-size: 28px;
+  }
+}
