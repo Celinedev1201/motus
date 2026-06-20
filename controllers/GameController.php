@@ -80,7 +80,12 @@ class GameController
             return;
         }
 
-        $comparison = self::compareWords($guess, $_SESSION['word']);
+        $comparison = self::compareWords(
+            $guess,
+            $_SESSION['word']
+        );
+
+        $isWin = ($guess === $_SESSION['word']);
 
         $_SESSION['guesses'][] = $guess;
         $_SESSION['results'][] = $comparison;
@@ -91,7 +96,11 @@ class GameController
             'message' => 'Mot ajouté.',
             'guesses' => $_SESSION['guesses'],
             'results' => $_SESSION['results'],
-            'attempts' => $_SESSION['attempts']
+                'attempts' => $_SESSION['attempts'],
+                'isWin' => $isWin,
+                'isLose' => $_SESSION['attempts'] >= 6 && !$isWin,
+                'secretWord' => $_SESSION['word']
+
         ]);
     }
 
@@ -100,11 +109,17 @@ class GameController
         $result = [];
 
         for ($i = 0; $i < strlen($secret); $i++) {
+
             if (($guess[$i] ?? '') === $secret[$i]) {
+
                 $result[] = 'correct';
+
             } elseif (str_contains($secret, $guess[$i] ?? '')) {
+
                 $result[] = 'present';
+
             } else {
+
                 $result[] = 'wrong';
             }
         }

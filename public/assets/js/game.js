@@ -20,6 +20,19 @@ if (guessForm) {
 
     document.getElementById("guess-message").textContent = data.message;
 
+    if (data.isWin) {
+      alert("Bravo ! Vous avez trouvé le mot !");
+      window.location.reload();
+      return;
+    }
+
+    if (data.isLose) {
+      alert("Perdu ! Le mot était : " + data.secretWord);
+
+      window.location.reload();
+      return;
+    }
+
     window.location.reload();
   });
 }
