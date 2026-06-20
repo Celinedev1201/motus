@@ -58,6 +58,12 @@
         >
             Nouvelle partie
         </a>
+        <a
+    href="/logout"
+    class="btn btn-outline"
+>
+    Déconnexion
+</a>
 
     </aside>
 
