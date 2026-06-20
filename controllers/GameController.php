@@ -33,6 +33,7 @@ class GameController
             $_SESSION['difficulty'] = $difficulty;
             $_SESSION['attempts'] = 0;
             $_SESSION['guesses'] = [];
+            $_SESSION['results'] = [];
         }
 
         $page = 'game';
@@ -46,6 +47,7 @@ class GameController
         unset($_SESSION['word']);
         unset($_SESSION['attempts']);
         unset($_SESSION['guesses']);
+        unset($_SESSION['results']);
 
         $difficulty = $_GET['difficulty'] ?? 'facile';
 
@@ -78,14 +80,35 @@ class GameController
             return;
         }
 
+        $comparison = self::compareWords($guess, $_SESSION['word']);
+
         $_SESSION['guesses'][] = $guess;
+        $_SESSION['results'][] = $comparison;
         $_SESSION['attempts']++;
 
         Flight::json([
             'success' => true,
             'message' => 'Mot ajouté.',
             'guesses' => $_SESSION['guesses'],
+            'results' => $_SESSION['results'],
             'attempts' => $_SESSION['attempts']
         ]);
+    }
+
+    private static function compareWords(string $guess, string $secret): array
+    {
+        $result = [];
+
+        for ($i = 0; $i < strlen($secret); $i++) {
+            if (($guess[$i] ?? '') === $secret[$i]) {
+                $result[] = 'correct';
+            } elseif (str_contains($secret, $guess[$i] ?? '')) {
+                $result[] = 'present';
+            } else {
+                $result[] = 'wrong';
+            }
+        }
+
+        return $result;
     }
 }

@@ -347,3 +347,18 @@ body {
   background: #17305f;
   border-color: #29406d;
 }
+
+.correct {
+  background: #198a3d;
+  border-color: #29b957;
+}
+
+.present {
+  background: #d99b16;
+  border-color: #ffc735;
+}
+
+.wrong {
+  background: #17305f;
+  border-color: #29406d;
+}
